@@ -1,6 +1,7 @@
 package com.example.mobiletracker
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,7 +24,7 @@ class MainScreen : Fragment() {
     private var _binding: FragmentMainScreenBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : MainScreenViewModel by viewModels()
+    private val viewModel: MainScreenViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +38,6 @@ class MainScreen : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         getCurrentLocation()
         binding.testText.text = "Hello!!!!"
-        viewModel
     }
 
     override fun onDestroyView() {
@@ -118,11 +118,10 @@ class MainScreen : Fragment() {
     }
 
     private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as
-                LocationManager
+        val locationManager: LocationManager =
+            activity?.getSystemService(Context.LOCATION_SERVICE) as
+                    LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
-
-
 }

@@ -1,7 +1,9 @@
 package com.example.mobiletracker
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
+import android.provider.Settings
 import android.util.Log
 import com.google.android.gms.location.*
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -15,6 +17,7 @@ class LocationProvider @Inject constructor(@ApplicationContext private val conte
     private lateinit var locationRequest: LocationRequest
 
     private lateinit var locationCallback: LocationCallback
+    val id: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
 
     fun getLocation(action: (MTdatas) -> Unit) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
@@ -24,21 +27,16 @@ class LocationProvider @Inject constructor(@ApplicationContext private val conte
                 if (locationResult.locations.isNotEmpty()) {
                     val location = locationResult.lastLocation
                     val mTdatas = MTdatas(
+                        serialNumber = id,
                         latitude = location!!.latitude,
                         longitude = location.longitude
                     )
-                    Log.i("long" , "${location.longitude}")
-                    Log.i("reach", "ed")
                     action(mTdatas)
                 }
             }
         }
         locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,5000L)
             .build()
-        /*locationRequest.interval = 50000
-        locationRequest.fastestInterval = 50000
-        locationRequest.smallestDisplacement = 170f // 170 m = 0.1 mile
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY //set according to your app function*/
         startLocationUpdates()
     }
 
@@ -62,8 +60,8 @@ class LocationProvider @Inject constructor(@ApplicationContext private val conte
         stopLocationUpdates()
     }*/
 
-    // start receiving location update when activity  visible/foreground
-    /*override fun onResume() {
+    /*// start receiving location update when activity  visible/foreground
+    override fun onResume() {
         super.onResume()
         startLocationUpdates()
     }*/
