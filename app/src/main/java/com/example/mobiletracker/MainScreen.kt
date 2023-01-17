@@ -19,20 +19,18 @@ import com.example.mobiletracker.databinding.FragmentMainScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainScreen : Fragment() {
+class MainScreen : Fragment(R.layout.fragment_main_screen) {
 
-    private var _binding: FragmentMainScreenBinding? = null
-    private val binding get() = _binding!!
-
+    private val binding by viewBinding(FragmentMainScreenBinding::bind)
     private val viewModel: MainScreenViewModel by viewModels()
 
-    override fun onCreateView(
+    /*override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainScreenBinding.inflate(inflater, container, false)
         return binding.root
-    }
+    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +40,7 @@ class MainScreen : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        //_binding = null
     }
 
     private fun getCurrentLocation() {
@@ -132,6 +130,6 @@ class MainScreen : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.startLocationListener()
+        viewModel.listenToLocation()
     }
 }

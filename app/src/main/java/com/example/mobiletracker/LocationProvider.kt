@@ -32,16 +32,13 @@ class LocationProvider @Inject constructor(@ApplicationContext private val conte
                 }
             }
         }
-        locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,1000L)
+        locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,5000L)
             .build()
         startLocationUpdates()
     }
 
     @SuppressLint("MissingPermission")
     fun startLocationUpdates() {
-        locationRequest = LocationRequest
-            .Builder(Priority.PRIORITY_HIGH_ACCURACY,1000L)
-            .build()
             fusedLocationClient.requestLocationUpdates(
             locationRequest,
             locationCallback,
