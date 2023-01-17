@@ -124,4 +124,14 @@ class MainScreen : Fragment() {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopLocationListener()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.startLocationListener()
+    }
 }
