@@ -41,7 +41,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRAMApi(retrofit: Retrofit): MTApiService {
+    fun provideMTApi(retrofit: Retrofit): MTApiService {
         return retrofit.create(MTApiService::class.java)
     }
 }
