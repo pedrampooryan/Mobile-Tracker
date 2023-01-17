@@ -24,7 +24,7 @@ class LocationProvider @Inject constructor(@ApplicationContext private val conte
                 if (locationResult.locations.isNotEmpty()) {
                     val location = locationResult.lastLocation
                     val mTdatas = MTdatas(
-                        serialNumber = id,
+                        deviceID = id,
                         latitude = location!!.latitude,
                         longitude = location.longitude
                     )

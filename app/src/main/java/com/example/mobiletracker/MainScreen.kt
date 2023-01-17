@@ -1,16 +1,13 @@
 package com.example.mobiletracker
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -24,31 +21,28 @@ class MainScreen : Fragment(R.layout.fragment_main_screen) {
     private val binding by viewBinding(FragmentMainScreenBinding::bind)
     private val viewModel: MainScreenViewModel by viewModels()
 
-    /*override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMainScreenBinding.inflate(inflater, container, false)
-        return binding.root
-    }*/
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCurrentLocation()
-        binding.testText.text = "Hello!!!!"
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        //_binding = null
+        viewModel.locCoordinateAndID.observe(viewLifecycleOwner) {
+            binding.apply {
+                deviceID.text = getString(R.string.serial_number, it.deviceID)
+                latitude.text = getString(R.string.latitude, it.latitude.toString())
+                longitude.text = getString(R.string.longitude, it.longitude.toString())
+            }
+        }
     }
 
     private fun getCurrentLocation() {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-
-                viewModel.listenToLocation()
-
+                binding.switch2.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        viewModel.listenToLocation()
+                    } else {
+                        viewModel.stopLocationListener()
+                    }
+                }
             } else {
                 Toast.makeText(activity, "Turn on Location", Toast.LENGTH_SHORT).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
@@ -100,8 +94,13 @@ class MainScreen : Fragment(R.layout.fragment_main_screen) {
         if (requestCode == PERMISSION_REQUEST_ACCESS_LOCATION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (isLocationEnabled()) {
-
-                    viewModel.listenToLocation()
+                    binding.switch2.setOnCheckedChangeListener { _, isChecked ->
+                        if (isChecked) {
+                            viewModel.listenToLocation()
+                        } else {
+                            viewModel.stopLocationListener()
+                        }
+                    }
 
                 } else {
                     Toast.makeText(activity, "Turn on Location", Toast.LENGTH_SHORT).show()
@@ -125,11 +124,17 @@ class MainScreen : Fragment(R.layout.fragment_main_screen) {
 
     override fun onPause() {
         super.onPause()
-        viewModel.stopLocationListener()
+        binding.switch2.isChecked = false
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.listenToLocation()
+        binding.switch2.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                viewModel.listenToLocation()
+            } else {
+                viewModel.stopLocationListener()
+            }
+        }
     }
 }

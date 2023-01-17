@@ -2,8 +2,11 @@ package com.example.mobiletracker
 
 
 import android.app.Application
+import android.renderscript.Matrix4f
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,6 +18,10 @@ class MainScreenViewModel @Inject constructor(
     private val repository: Repository,
     application: Application,
 ) : AndroidViewModel(application) {
+
+    private val _locCoordinateAndID = MutableLiveData<MTdatas>()
+    val locCoordinateAndID: LiveData<MTdatas>
+        get() = _locCoordinateAndID
 
 
     private fun sendLocationAtt(mTdatas: MTdatas) {
@@ -29,6 +36,7 @@ class MainScreenViewModel @Inject constructor(
 
     fun listenToLocation() {
         locationProvider.getLocation {
+            _locCoordinateAndID.value = it
             sendLocationAtt(it)
         }
     }

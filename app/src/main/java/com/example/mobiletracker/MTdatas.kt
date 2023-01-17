@@ -1,7 +1,7 @@
 package com.example.mobiletracker
 
 data class MTdatas(
-    val serialNumber: String,
+    val deviceID: String,
     val latitude: Double,
-    val longitude: Double ,
+    val longitude: Double,
 )
