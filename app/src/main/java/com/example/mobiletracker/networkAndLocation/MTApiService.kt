@@ -1,4 +1,4 @@
-package com.example.mobiletracker
+package com.example.mobiletracker.networkAndLocation
 
 import retrofit2.http.Body
 import retrofit2.http.Headers

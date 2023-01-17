@@ -1,4 +1,4 @@
-package com.example.mobiletracker
+package com.example.mobiletracker.screen
 
 import android.Manifest
 import android.content.Context
@@ -12,7 +12,9 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.mobiletracker.R
 import com.example.mobiletracker.databinding.FragmentMainScreenBinding
+import com.example.mobiletracker.viewBinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

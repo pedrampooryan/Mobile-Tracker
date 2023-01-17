@@ -1,13 +1,15 @@
-package com.example.mobiletracker
+package com.example.mobiletracker.screen
 
 
 import android.app.Application
-import android.renderscript.Matrix4f
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.mobiletracker.networkAndLocation.LocationProvider
+import com.example.mobiletracker.networkAndLocation.MTdatas
+import com.example.mobiletracker.networkAndLocation.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

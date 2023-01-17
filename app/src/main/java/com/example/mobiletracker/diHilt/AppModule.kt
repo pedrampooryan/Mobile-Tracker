@@ -1,5 +1,6 @@
-package com.example.mobiletracker
+package com.example.mobiletracker.diHilt
 
+import com.example.mobiletracker.networkAndLocation.MTApiService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

@@ -1,4 +1,4 @@
-package com.example.mobiletracker
+package com.example.mobiletracker.networkAndLocation
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class LocationProvider @Inject constructor(@ApplicationContext private val context: Context) {
 
-    private  var fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
+    private  var fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     @SuppressLint("HardwareIds")
